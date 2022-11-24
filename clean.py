@@ -11,6 +11,7 @@ def pitch_class(df):
 	df['p_throws']=df.['p_throws'].replace({'R':1,'L':2})
 	df['of_fielding_alignment']=df['of_fielding_alignment'].replace({'4th outfielder':2, 'Standard':1}, 'Strategic':3})
 	df.drop(columns=['pitch_name'])
+	df['description']=df['description'].replace({'ball':1, 'blocked_ball':2, 'called_strike':3, 'foul':4, 'hit_into_play':5, 'swinging_strike':6})
 	return df
 
 def main():
