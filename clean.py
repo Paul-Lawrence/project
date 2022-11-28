@@ -10,7 +10,7 @@ def pitch_class(df):
 	df['p_throws']=df['p_throws'].replace({'R':1,'L':2})
 	df['of_fielding_alignment']=df['of_fielding_alignment'].replace({'4th outfielder':2, 'Standard':1, 'Strategic':3})
 	df['description']=df['description'].replace({'ball':1, 'blocked_ball':1, 'called_strike':2, 'foul':3, 'foul_bunt':3, 'foul_tip':3, 'bunt_foul_tip':3, 'hib_by_pitch':1, 'missed_bunt':5, 'swinging_strike_blocked':5, 'hit_into_play':4, 'swinging_strike':5})
-	df['bb_type']=df['bb_type'].replace({'':0,'fly_ball':1, 'ground_ball':2,'line_drive':3, 'popup':4})
+	df['bb_type']=df['bb_type'].replace({'fly_ball':1, 'ground_ball':2,'line_drive':3, 'popup':4})
 	df=df.drop('pitch_name', axis=1)
 	df=df.drop('inning_topbot', axis=1)
 	df=df.drop('events', axis=1)
