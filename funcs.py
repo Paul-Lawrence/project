@@ -16,14 +16,17 @@ def write(df, fname):
 def split_labels(df): #Returns tensors 
 	labels=df['pitch_type'].values
 	arr = df.drop('pitch_type', axis=1).values
-	return torch.from_numpy(arr.astype(dtype=np.float32)), torch.from_numpy(labels.astype(dtype=np.float32))
+	return arr, labels
+	
+def totensor(arr):
+	return torch.from_numpy(ARR.astype(dtype=np.float32))
 
 def split_datasets(df): #Splits into train and test, along with labels
 	df = shuffle(df)
 	traindf=df.loc[:int(len(df)*0.8)].reset_index(drop=True)
 	testdf=df.loc[int(len(df)*0.8):].reset_index(drop=True)
-	testdf.loc[:,'spin_axis':'release_pos_y']=0
-	traindf.loc[:int(len(traindf)*0.2),'spin_axis':'release_pos_y']=0
+	testdf.loc[:,'spin_axis':'estimated_woba_using_speedangle']=0
+	traindf.loc[:int(len(traindf)*0.2),'spin_axis':'estimated_woba_using_speedangle']=0
 	return shuffle(traindf),testdf
 	
 def cleandf(df, pitcher):
@@ -80,4 +83,4 @@ def main():
 		fname=pitcher+".xlsx"
 		cleanfile(fname, pitcher)
 
-main()
+#main()
