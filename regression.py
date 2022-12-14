@@ -14,15 +14,30 @@ def fit_LinReg(clf, X, y):
 def get_acc(clf,X,y):
 	print("Getting accuracy...")
 	pred=clf.predict(X)
+	#print(funcs.per_pitch_acc(y, pred))
 	return metrics.accuracy_score(y,pred)
 	
 def get_log_loss(clf,X,y):
-	print("Getting log loss...")
+	#print("Getting log loss...")
 	pred=clf.predict_proba(X)
 	return metrics.log_loss(y,pred)
 
+def regress(train_x,train_y,test_x,test_y, pitcher='X'):
+	clf=LogisticRegression()
+	print("Fitting linear regression...")
+	clf=fit_LinReg(clf,train_x,train_y)
+	print("Getting scores...")
+	train_ll=get_log_loss(clf,train_x,train_y)
+	test_ll=get_log_loss(clf,test_x,test_y)
+	train_acc=get_acc(clf,train_x,train_y)
+	test_acc=get_acc(clf,test_x,test_y)
+	print("Training accuracy for {}: {}. Train loss: {}".format(pitcher,train_acc,train_ll))
+	print('Test accuracy for {}: {}. Test loss: {}'.format(pitcher,test_acc,test_ll))	
+	return (train_acc,train_ll,test_acc,test_ll)
+
+
 def main():
-	fname='Alcantara_clean.xlsx'
+	fname='Bieber_clean.xlsx'
 	print("Reading {}...".format(fname))
 	df = pd.read_excel(fname)
 	print("Splitting into labels and data...")
@@ -42,4 +57,4 @@ def main():
 	
 
 
-main()
+#main()

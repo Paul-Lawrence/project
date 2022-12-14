@@ -22,11 +22,24 @@ def get_log_loss(clf,X,y):
 	#print(X[0])
 	#print(pred)
 	#for p in pred:
-#		print(p)
+	#	print(p)
 	return metrics.log_loss(y,pred)
-
+	
+def vector(train_x,train_y,test_x,test_y,pitcher='X'):
+	print("Fitting svm...")
+	clf=svm.SVC(probability=True)
+	clf=fit_SVC(clf, train_x,train_y)
+	print("Getting scores...")
+	train_bs=get_log_loss(clf,train_x,train_y)
+	test_bs=get_log_loss(clf,test_x,test_y)
+	train_acc=get_acc(clf,train_x,train_y)
+	test_acc=get_acc(clf,test_x,test_y)
+	print("Training accuracy for {}: {}. Train score: {}".format(pitcher,train_acc,train_bs))
+	print('Test accuracy for {}: {}. Test score: {}'.format(pitcher,test_acc,test_bs))	
+	return train_bs,train_acc,test_bs,test_acc
+	
 def main():
-	fname='Alcantara_clean.xlsx'
+	fname='Nola_clean.xlsx'
 	print("Reading {}...".format(fname))
 	df = pd.read_excel(fname)
 	print("Splitting into labels and data...")
@@ -48,4 +61,4 @@ def main():
 	
 
 
-main()
+#main()

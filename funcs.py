@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import torch
 from sklearn import preprocessing
+from sklearn import metrics
+import matplotlib.pyplot as plt
 
 
 
@@ -9,6 +11,8 @@ def shuffle(df):
 	df=df.sample(frac=1).reset_index(drop=True)
 	return df
 
+def read_clean_file(name):
+	return pd.read_excel("{}_clean.xlsx".format(name))
 
 def write(df, fname):
 	df.to_excel(fname)
@@ -70,6 +74,12 @@ def cleanfile(fname, pitcher):
 	print("Writing cleaned file to {}...".format(cleanname))
 	df.to_excel(cleanname, index=False)
 	return df
+	
+def per_pitch_acc(y, pred): #Plots per-pitch accuracy based on prediction model.
+	cm = metrics.confusion_matrix(y, pred)
+	cm=cm.astype('float')/cm.sum(axis=1)[:, np.newaxis]
+	return cm.diagonal()
+	
 	
 def replacedates(df):
 	le=preprocessing.LabelEncoder()
