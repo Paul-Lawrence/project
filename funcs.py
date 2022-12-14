@@ -112,6 +112,8 @@ def clean2(df, pitcher):
 		df=df[(df['pitch_type']!='CU')]
 	if (pitcher=='Kershaw'):
 		df=df[(df['pitch_type']!='CH') & (df['pitch_type']!='SI')]
+	if (pitcher=='Bieber'):
+		df=df[(df['pitch_type']!='SI')]
 	#df=df.drop('bb_type', axis=1)
 	df=df.drop('description', axis=1)
 	df=df.drop('Unnamed: 0', axis=1)
@@ -126,12 +128,12 @@ def clean2(df, pitcher):
 	
 def cleanfile2(pitcher):
 	print("Reading in {}...".format(pitcher))
-	df = pd.read_excel('second_try.xlsx', sheet_name='{}'.format(pitcher))
+	df = pd.read_excel('second_try.xlsx', sheet_name=pitcher)
 	#print(df)
 	df = clean2(df, pitcher)
-	cleanname=pitcher+"_clean"
-	print("Writing cleaned file to {}...".format(cleanname))
-	df.to_excel('second_try_clean.xlsx', sheet_name='{}'.format(pitcher), index=False)
+	print("Writing cleaned file...")
+	with pd.ExcelWriter('second_try_clean.xlsx', engine='openpyxl', mode='a') as writer:
+		df.to_excel(writer, sheet_name=pitcher, index=False)
 	return df
 	
 def cleanfile(fname, pitcher):
@@ -157,14 +159,12 @@ def replacedates(df):
 	return df
 
 def main():
-	#plist=['Bieber','Kershaw','Verlander','Alcantara','Nola','Greinke','Wainwright']
-	#for pitcher in plist:
-	#	fname=pitcher+".xlsx"
-	#	cleanfile(fname, pitcher)
-	#cleanfile2('Alcantara')
-	df=pd.read_excel('second_try_clean.xlsx',sheet_name='Alcantara')
-	print(df)
-	print(get_predict_set(df))
-	print(get_recog_set(df))
+	plist=['Bieber']
+	for pitcher in plist:
+		cleanfile2(pitcher)
+	#df=pd.read_excel('second_try_clean.xlsx',sheet_name='Alcantara')
+	#print(df)
+	#print(get_predict_set(df))
+	#print(get_recog_set(df))
 
 #main()

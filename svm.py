@@ -22,8 +22,8 @@ def get_log_loss(clf,X,y):
 	#print(y)
 	#print(X[0])
 	#print(pred)
-	#for p in pred:
-	#	print(p)
+	#for i in range(len(pred)):
+	#	print(y[i],pred[i])
 	return metrics.log_loss(y,pred)
 	
 def vector(train_x,train_y,test_x,test_y,pitcher='X'):
@@ -80,4 +80,4 @@ def test_2():
 def main():
 	test_2()
 	
-main()
+#main()

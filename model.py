@@ -115,27 +115,14 @@ def recog_svm_reg(pitchers):
 		svm_test_acc[i]=svt_acc		
 	plot_svm_reg_loss(svm_train_loss,svm_test_loss,reg_train_loss,reg_test_loss, pitchers)
 	plot_svm_reg_acc(svm_train_acc,svm_test_acc,reg_train_acc,reg_test_acc,pitchers)
-	
-	
-def recog_svm_reg(pitchers):
-	svm_train_loss=[0]*len(pitchers)
-	svm_test_loss=[0]*len(pitchers)
-	reg_train_loss=[0]*len(pitchers)
-	reg_test_loss=[0]*len(pitchers)
-	svm_train_acc=[0]*len(pitchers)
-	svm_test_acc=[0]*len(pitchers)
-	reg_train_acc=[0]*len(pitchers)
-	reg_test_acc=[0]*len(pitchers)	
 
 def main():
-	#pitchers=['Alcantara','Bieber','Nola','Verlander','Wainwright']
-	#svm_reg_att_1(pitchers)
+	pitchers=['Alcantara','Bieber','Nola','Verlander','Wainwright']
+	#predict_svm_reg(pitchers)
+	recog_svm_reg(pitchers)
 	#test=[1,1,1,1,1]
 	#plot_svm_reg_loss(test,test,test,test,pitchers)
 	#svm_reg_att_1(pitchers)
-	predict_svm_reg(['Alcantara'])
-	recog_svm_reg(['Alcantara'])
-	
-	
+
 	
 main()

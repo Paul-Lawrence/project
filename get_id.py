@@ -9,7 +9,7 @@ def lookup(Name):
 
 
 def main():
-	names=[['Justin','Verlander'], ['Sandy', 'Alcantara']]
+	names=[['Shane','Bieber'], ['Aaron','Nola'],['Adam','Wainwright']]
 	for n in names:
 		lookup(n)
-main()
+#main()
