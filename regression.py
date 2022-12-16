@@ -71,9 +71,17 @@ def test_2():
 	train_acc=get_acc(clf,train_x,train_y)
 	test_acc=get_acc(clf,test_x,test_y)
 	print("Training accuracy: {}. Train loss: {}".format(train_acc,train_ll))
-	print('Test accuracy: {}. Test loss: {}'.format(test_acc,test_ll))	
+	print('Test accuracy: {}. Test loss: {}'.format(test_acc,test_ll))
 	
-
+def per_pitch_reg(train_x,train_y,test_x,test_y, pitcher='X'):
+	clf=LogisticRegression()
+	print("Fitting linear regression...")
+	clf=fit_LinReg(clf,train_x,train_y)
+	print("Getting scores for {}...".format(pitcher))
+	pred=clf.predict(test_x)
+	acc=funcs.per_pitch_acc(test_y,pred)
+	print("Per-pitch accuracy for {}....".format(acc))
+	return acc
 
 def main():
 	test_2()

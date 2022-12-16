@@ -38,6 +38,16 @@ def vector(train_x,train_y,test_x,test_y,pitcher='X'):
 	print("Training accuracy for {}: {}. Train score: {}".format(pitcher,train_acc,train_bs))
 	print('Test accuracy for {}: {}. Test score: {}'.format(pitcher,test_acc,test_bs))	
 	return train_bs,train_acc,test_bs,test_acc
+
+def per_pitch_svm(train_x,train_y,test_x,test_y, pitcher='X'):
+	clf=svm.SVC()
+	print("Fitting linear regression...")
+	clf=fit_SVC(clf,train_x,train_y)
+	print("Getting scores for {}...".format(pitcher))
+	pred=clf.predict(test_x)
+	acc=funcs.per_pitch_acc(test_y,pred)
+	print("Per-pitch accuracy for {}....".format(acc))
+	return acc
 	
 def test_1():
 	fname='Alcantara_clean.xlsx'

@@ -3,9 +3,15 @@ from pybaseball import statcast_pitcher
 import openpyxl
 import pandas 
 def main():
-	ids=[['Bieber',669456],['Nola',605400],['Wainwright',425794]]
-	for player in ids:
-		get_data(player)
+	#ids=[['Bieber',669456],['Nola',605400],['Wainwright',425794]]
+	#for player in ids:
+	#	get_data(player)
+	get_stats()
+	
+def get_stats():
+	print("Getting stats!")
+	data=statcast(start_dt='2022-06-01',end_dt='2022-06-10')
+	data.to_excel('big_stats.xlsx', index=False)
 		
 		
 def get_data(player):
@@ -17,4 +23,4 @@ def get_data(player):
 				data.to_excel(writer, sheet_name=player[0])
 
 
-#main()
+main()
