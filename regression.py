@@ -20,8 +20,8 @@ def get_acc(clf,X,y):
 def get_log_loss(clf,X,y):
 	#print("Getting log loss...")
 	pred=clf.predict_proba(X)
-	#for i in range(len(pred)):
-	#	print(y[i],pred[i])
+	for i in range(len(pred)):
+		print(y[i],pred[i])
 	return metrics.log_loss(y,pred)
 
 def regress(train_x,train_y,test_x,test_y, pitcher='X'):

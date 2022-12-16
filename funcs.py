@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-#import torch
+import torch
 from sklearn import preprocessing
 from sklearn import metrics
 import matplotlib.pyplot as plt
@@ -94,7 +94,7 @@ def cleandf(df, pitcher):
 def clean2(df, pitcher):
 	df=shuffle(df)
 	df = df[df['pitch_type'].notna()]
-	df['pitch_type']=df['pitch_type'].replace({'FF': 1, 'SI':2, 'CU':3, 'CS':3, 'SL':4, 'CH':5, 'FC':6, 'KC':3})
+	df['pitch_type']=df['pitch_type'].replace({'FF': 1, 'SI':2, 'CU':3, 'SL':4, 'CH':5, 'FC':6})
 	df['if_fielding_alignment']=df['if_fielding_alignment'].replace({'Infield shift':2, 'Standard':1, 'Strategic':3})
 	df['stand']=df['stand'].replace({'L':1,'R':2})
 	df['p_throws']=df['p_throws'].replace({'R':1,'L':2})
@@ -102,6 +102,7 @@ def clean2(df, pitcher):
 	#df['description']=df['description'].replace({'ball':1, 'blocked_ball':1, 'called_strike':2, 'foul':3, 'foul_bunt':3, 'foul_tip':3, 'bunt_foul_tip':3, 'hit_by_pitch':1, 'missed_bunt':5, 'swinging_strike_blocked':5, 'hit_into_play':4, 'swinging_strike':5})
 	#df['bb_type']=df['bb_type'].replace({'fly_ball':1, 'ground_ball':2,'line_drive':3, 'popup':4})
 	#df=replacedates(df)
+	df = df[(df['pitch_type']!='EP')&(df['pitch_type']!='FA')&(df['pitch_type']!='FS')&(df['pitch_type']!='KC')&(df['pitch_type']!='CS')]
 	if (pitcher=='Greinke'):
 		df=df[(df['pitch_type']!='FC') & (df['pitch_type']!='EP') & (df['pitch_type']!='FS')]	
 	if (pitcher=='Wainwright'):
@@ -116,7 +117,7 @@ def clean2(df, pitcher):
 		df=df[(df['pitch_type']!='SI')]
 	#df=df.drop('bb_type', axis=1)
 	df=df.drop('description', axis=1)
-	df=df.drop('Unnamed: 0', axis=1)
+	#df=df.drop('Unnamed: 0', axis=1)
 	df=df.drop('pitch_name', axis=1)
 	df=df.drop('inning_topbot', axis=1)
 	df=df.drop('events', axis=1)
@@ -132,8 +133,8 @@ def cleanfile2(pitcher):
 	#print(df)
 	df = clean2(df, pitcher)
 	print("Writing cleaned file...")
-	with pd.ExcelWriter('second_try_clean.xlsx', engine='openpyxl', mode='a') as writer:
-		df.to_excel(writer, sheet_name=pitcher, index=False)
+	#with pd.ExcelWriter('second_try_clean.xlsx', engine='openpyxl', mode='a') as writer:
+	#	df.to_excel(writer, sheet_name=pitcher, index=False)
 	return df
 	
 def cleanfile(fname, pitcher):
@@ -170,10 +171,11 @@ def concat(pitchers):
 	return con
 
 def main():
-	pitchers=['Alcantara','Bieber','Nola','Verlander','Wainwright']
-	concat(pitchers)
-#	with pd.ExcelWriter('second_try_clean.xlsx', engine='openpyxl', mode='a') as writer:
-#		df.to_excel(writer, sheet_name='Bieber', index=False)
+	df=pd.read_excel('big_stats.xlsx', sheet_name='Raw')
+	df=clean2(df, 'Raw')
+	df.to_excel('big_stats_clean.xlsx')
+	with pd.ExcelWriter('big_stats.xlsx', engine='openpyxl', mode='a') as writer:
+		df.to_excel(writer, sheet_name='Clean', index=False)
 	#df=pd.read_excel('second_try_clean.xlsx',sheet_name='Alcantara')
 	#print(df)
 	#print(get_predict_set(df))

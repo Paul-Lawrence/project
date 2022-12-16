@@ -175,8 +175,8 @@ def pad_zeroes(pitcher, pitches):
 		pitches=np.insert(pitches,3,0)
 	return pitches
 
-def learn_concat(con):
-	train_set,test_set=funcs.split_datasets_2(con)
+def learn(df):
+	train_set,test_set=funcs.split_datasets_2(df)
 	train_x,train_y=funcs.split_labels(train_set)
 	test_x,test_y=funcs.split_labels(test_set)
 	train_acc,train_loss,test_acc,test_loss=regression.regress(train_x,train_y,test_x,test_y)
@@ -191,26 +191,24 @@ def learn_concat(con):
 	plt.show()
 	
 	
-def predict_con():
-	print("Reading in file...")
-	df=pd.read_excel('concat_pitchers.xlsx')
+def predict(df):
 	df=funcs.get_predict_set(df)
-	learn_concat(df)
+	learn(df)
 	
-def recog_con():
-	print("Reading in file...")
-	df=pd.read_excel('concat_pitchers.xlsx')
-	df1=funcs.get_recog_set(df)
-	learn_concat(df1)
+def recog(df):
+	df=funcs.get_recog_set(df)
+	learn(df)
 	#df2=funcs.get_predict_set(df)
 	#learn_concat(df2)
 	
 def main():
 	#pitchers=['Alcantara','Bieber','Nola','Verlander','Wainwright']
-	predict_con()
+	df=pd.read_excel('big_stats.xlsx', sheet_name='Clean')
+	predict(df)
+	recog(df)
 	#test=[1,1,1,1,1]
 	#plot_svm_reg_loss(test,test,test,test,pitchers)
 	#svm_reg_att_1(pitchers)
 
 	
-main()
+#main()
